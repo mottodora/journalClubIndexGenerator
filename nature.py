@@ -1,6 +1,7 @@
 import urllib.request
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
+import datetime
 
 url = "http://www.nature.com/nature/journal/v533/n7602/index.html"
 if url.split('/')[2] == "www.nature.com":
@@ -18,21 +19,42 @@ bsObj = BeautifulSoup(html.read(), "lxml")
 meta = bsObj.find("div", {"id": "issue-meta"})\
         .find("div", {"class": "subsection"})
 header = meta.find("header")
-metadata = header.get_text()
+metadata = header.get_text(" ")
 print(jounal_title)
 print(metadata)
 research = bsObj.find("div", {"id": "research"})
 #for a in article_list.find("div", {"class": "standard-teaser"}):
-for sub in research.findAll("div", {"class": "subsection"}):
-    print(sub.find("span").get_text())
-    article_list = sub.find("ul", {"class": "article-list"})
-    #for article in article_list.findAll("article"):
-    for article in article_list.findAll("div", {"class": "standard-teaser"}):
-        #title = article.find("hgroup").find("a").get_text()
-        title = article.hgroup.get_text()
-        print('title: ' + title)
-        try:
-            summary = article.p.get_text()
-            print(summary)
-        except AttributeError:
-            continue
+
+author = "Unknown"
+
+with open("journalclub.tex", "w") as f:
+    f.write('\\documentclass[a4j]{jsarticle}\n')
+    f.write('\\begin{document}\n')
+    f.write('\\title{\\vspace{-1.5cm}JournalClub}\n')
+    f.write('\\author{%s}\n'%(author))
+    d = datetime.datetime.today()
+    f.write("\date{%s年%s月%s日\\vspace{-0.3cm}}\n"%(d.year, d.month, d.day))
+    f.write("\maketitle\n")
+    f.write('\\noindent\n%s %s\n\\vspace{-5mm}\n'%(jounal_title, metadata))
+
+    for sub in research.findAll("div", {"class": "subsection"}):
+        category = sub.find("span").get_text()
+        article_list = sub.find("ul", {"class": "article-list"})
+        #for article in article_list.findAll("article"):
+        articles = []
+        for article in article_list\
+                       .findAll("div", {"class": "standard-teaser"}):
+            #title = article.find("hgroup").find("a").get_text()
+            title = article.hgroup.get_text()
+            print('title: ' + title)
+            try:
+                summary = article.p.get_text()
+                articles.append((title, summary))
+            except AttributeError:
+                continue
+        if len(articles) > 1:
+            f.write('\section{%s}\n'%(category))
+            for t, s in articles:
+                f.write('\\noindent\\textbf{%s}\n%s\n\\vspace{3mm}\n'%(t,s))
+    f.write('\end{document}\n')
+
