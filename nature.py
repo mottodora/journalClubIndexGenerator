@@ -1,8 +1,14 @@
 import urllib.request
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
+
+url = "http://www.nature.com/nature/journal/v533/n7602/index.html"
+if url.split('/')[2] == "www.nature.com":
+    if url.split('/')[3] == 'nature':
+        jounal_title = 'Nature'
+
 try:
-    html = urllib.request.urlopen("http://www.nature.com/nature/journal/v533/n7602/index.html")
+    html = urllib.request.urlopen(url)
 except HTTPError as e:
     print(e)
 except URLError as e:
@@ -13,6 +19,7 @@ meta = bsObj.find("div", {"id": "issue-meta"})\
         .find("div", {"class": "subsection"})
 header = meta.find("header")
 metadata = header.get_text()
+print(jounal_title)
 print(metadata)
 research = bsObj.find("div", {"id": "research"})
 #for a in article_list.find("div", {"class": "standard-teaser"}):
