@@ -6,7 +6,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='nature summary generator')
 parser.add_argument('--url', '-u', \
-                    default='http://www.nature.com/nbt/current_issue/',
+                    default='http://www.nature.com/ng/current_issue/index.html',
                     help='URL you want to generate a summary')
 parser.add_argument('--author', '-a',
                     default="Someone")
@@ -20,6 +20,8 @@ if url.split('/')[2] == "www.nature.com":
         jounal_title = 'Nature'
     elif url.split('/')[3] == 'nbt':
         jounal_title = 'Nature Biotechnology'
+    elif url.split('/')[3] == 'ng':
+        jounal_title = 'Nature Genetics'
 
 try:
     html = urllib.request.urlopen(url)
@@ -41,20 +43,20 @@ with open("journalclub.tex", "w") as f:
     f.write("\maketitle\n")
     f.write('\\noindent\n%s %s\n\\vspace{-5mm}\n'%(jounal_title, metadata))
 
-    tmp = bsObj.find("div", {"class": "subject", "id": "re"})
+    for subject in bsObj.findAll("div", {"class":"subject"}):
+        category = subject.find("h3", {"class": "subject"}).get_text()
+        articles = []
+        for article in subject.findAll("div", {"class": None}):
+            try:
+                t = article.find("h4").get_text()
+                s = article.find("p", {"class":"annotation"}).get_text()
+                articles.append((t, s))
+            except AttributeError:
+                continue
 
-    while tmp.next_sibling.name != "div":
-        category = tmp.next_sibling.get_text()
-        f.write('\section{%s}\n'%(category))
-        articles = tmp.next_sibling.next_sibling
-        for article in articles.findAll("div", {"class": None}):
-            t = article.find("h4").get_text()
-            s = article.find("p", {"class":"annotation"}).get_text()
-            f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'%(t,s))
-        tmp = tmp.next_sibling.next_sibling
+        if len(articles) > 0:
+            f.write('\section{%s}\n'%(category))
+            for t, s in articles:
+                f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'%(t,s))
     f.write('\end{document}\n')
-
-
 print('generate summary about %s %s'%(jounal_title, metadata))
-
-
