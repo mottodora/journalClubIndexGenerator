@@ -2,8 +2,16 @@ import urllib.request
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
 import datetime
+import argparse
 
-url = "http://www.nature.com/nature/journal/v533/n7602/index.html"
+parser = argparse.ArgumentParser(description='nature summary generator')
+parser.add_argument('--url', '-u', \
+                    default='http://www.nature.com/nature/current_issue.html',
+                    help='URL you want to generate a summary')
+parser.add_argument('--author', '-a',
+                    default="Someone")
+args = parser.parse_args()
+url = args.url
 if url.split('/')[2] == "www.nature.com":
     if url.split('/')[3] == 'nature':
         jounal_title = 'Nature'
@@ -20,12 +28,8 @@ meta = bsObj.find("div", {"id": "issue-meta"})\
         .find("div", {"class": "subsection"})
 header = meta.find("header")
 metadata = header.get_text(" ")
-print(jounal_title)
-print(metadata)
 research = bsObj.find("div", {"id": "research"})
-#for a in article_list.find("div", {"class": "standard-teaser"}):
-
-author = "Unknown"
+author = args.author
 
 with open("journalclub.tex", "w") as f:
     f.write('\\documentclass[a4j]{jsarticle}\n')
@@ -40,21 +44,19 @@ with open("journalclub.tex", "w") as f:
     for sub in research.findAll("div", {"class": "subsection"}):
         category = sub.find("span").get_text()
         article_list = sub.find("ul", {"class": "article-list"})
-        #for article in article_list.findAll("article"):
         articles = []
         for article in article_list\
                        .findAll("div", {"class": "standard-teaser"}):
-            #title = article.find("hgroup").find("a").get_text()
             title = article.hgroup.get_text()
-            print('title: ' + title)
             try:
                 summary = article.p.get_text()
                 articles.append((title, summary))
             except AttributeError:
                 continue
-        if len(articles) > 1:
+        if len(articles) > 0:
             f.write('\section{%s}\n'%(category))
             for t, s in articles:
                 f.write('\\noindent\\textbf{%s}\n%s\n\\vspace{3mm}\n'%(t,s))
     f.write('\end{document}\n')
 
+print('generate summary about %s %s'%(jounal_title, metadata))
