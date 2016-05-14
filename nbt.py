@@ -40,3 +40,21 @@ with open("journalclub.tex", "w") as f:
     f.write("\date{%s年%s月%s日\\vspace{-0.3cm}}\n"%(d.year, d.month, d.day))
     f.write("\maketitle\n")
     f.write('\\noindent\n%s %s\n\\vspace{-5mm}\n'%(jounal_title, metadata))
+
+    tmp = bsObj.find("div", {"class": "subject", "id": "re"})
+
+    while tmp.next_sibling.name != "div":
+        category = tmp.next_sibling.get_text()
+        f.write('\section{%s}\n'%(category))
+        articles = tmp.next_sibling.next_sibling
+        for article in articles.findAll("div", {"class": None}):
+            t = article.find("h4").contents[0].strip()
+            s = article.find("p", {"class":"annotation"}).get_text()
+            f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'%(t,s))
+        tmp = tmp.next_sibling.next_sibling
+    f.write('\end{document}\n')
+
+
+print('generate summary about %s %s'%(jounal_title, metadata))
+
+
