@@ -56,7 +56,7 @@ with open("journalclub.tex", "w") as f:
         if len(articles) > 0:
             f.write('\section{%s}\n'%(category))
             for t, s in articles:
-                f.write('\\noindent\\textbf{%s}\n%s\n\\vspace{3mm}\n'%(t,s))
+                f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'%(t,s))
     f.write('\end{document}\n')
 
 print('generate summary about %s %s'%(jounal_title, metadata))
