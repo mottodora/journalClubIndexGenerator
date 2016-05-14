@@ -8,6 +8,12 @@ except HTTPError as e:
 except URLError as e:
     print("The server could not be found!")
 bsObj = BeautifulSoup(html.read(), "lxml")
+
+meta = bsObj.find("div", {"id": "issue-meta"})\
+        .find("div", {"class": "subsection"})
+header = meta.find("header")
+metadata = header.get_text()
+print(metadata)
 research = bsObj.find("div", {"id": "research"})
 #for a in article_list.find("div", {"class": "standard-teaser"}):
 for sub in research.findAll("div", {"class": "subsection"}):
