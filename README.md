@@ -7,7 +7,7 @@ URLと名前を入れるだけで、ジャーナルクラブの目次を作っ�
 
 * python 2,3
 * BeautifulSoup
-* lxml
+* html5lib
 * six
 
 ## 対応雑誌
