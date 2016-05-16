@@ -20,8 +20,8 @@ $ git clone https://github.com/mottodora/journalClubIndexGenerator.git
 $ cd journalClubIndexGenerator
 $ pip install -e .
 $ generateIndex --url http://www.nature.com/ng/journal/v48/n5/index.html --author "Motoki Abe"
-$ platex jounalclub.tex
-$ dvipdfmx jounalclub.dvi
+$ platex journalclub.tex
+$ dvipdfmx journalclub.dvi
 ```
 
 ## Known Problems
