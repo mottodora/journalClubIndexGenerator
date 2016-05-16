@@ -7,6 +7,10 @@ setup(name="indexGen",
       author="motoki",
       author_email="motoki@dna.bio.keio.ac.jp",
       packages=find_packages(),
+      install_requires=[
+          'beautifulsoup4',
+          'lxml',
+      ],
       entry_points="""
       [console_scripts]
       generateIndex = generator:main
