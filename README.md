@@ -16,7 +16,8 @@ URLと名前を入れるだけで、ジャーナルクラブの目次を作っ�
 ## 使い方
 
 ```
-$ python generator.py --url http://www.nature.com/ng/journal/v48/n5/index.html --author "Motoki Abe"
+$ pip install -e .
+$ generateIndex --url http://www.nature.com/ng/journal/v48/n5/index.html --author "Motoki Abe"
 $ platex jounalclub.tex
 $ dvipdfmx jounalclub.dvi
 ```
