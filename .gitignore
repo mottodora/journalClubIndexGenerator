@@ -1,1 +1,4 @@
 journalclub.tex
+__pycache__
+journal/__pycache__
+*.pyc
