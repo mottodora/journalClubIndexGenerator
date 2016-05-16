@@ -66,3 +66,28 @@ def _nbt(url):
             jounal_data.append((category, articles))
         tmp = tmp.next_sibling.next_sibling
     return meta_data, jounal_data
+
+def _ng(url):
+    try:
+        html = urllib.request.urlopen(url)
+    except HTTPError as e:
+        print(e)
+    except URLError as e:
+        print("The server could not be found!")
+    bsObj = BeautifulSoup(html.read(), "lxml")
+    meta_data = bsObj.find("h2", {"class": "issue"}).get_text()
+
+    jounal_data = []
+    for subject in bsObj.findAll("div", {"class":"subject"}):
+        category = subject.find("h3", {"class": "subject"}).get_text()
+        articles = []
+        for article in subject.findAll("div", {"class": None}):
+            try:
+                t = article.find("h4").get_text()
+                s = article.find("p", {"class":"annotation"}).get_text()
+                articles.append((t, s))
+            except AttributeError:
+                continue
+        if len(articles) > 0:
+            jounal_data.append((category, articles))
+    return meta_data, jounal_data
