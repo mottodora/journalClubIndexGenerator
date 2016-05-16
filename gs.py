@@ -1,4 +1,6 @@
-from urllib.error import URLError, HTTPError
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+from six.moves.urllib.error import URLError, HTTPError
 from journal.nature import _nature, _nbt, _ng
 from journal.oxford import _bioinformatics, _nar
 

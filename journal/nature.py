@@ -1,10 +1,12 @@
-import urllib.request
-from urllib.error import URLError, HTTPError
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+from six.moves.urllib.request import urlopen
+from six.moves.urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
 
 def _nature(url):
     try:
-        html = urllib.request.urlopen(url)
+        html = urlopen(url)
     except HTTPError as e:
         print(e)
     except URLError as e:
@@ -39,7 +41,7 @@ def _nature(url):
 
 def _nbt(url):
     try:
-        html = urllib.request.urlopen(url)
+        html = urlopen(url)
     except HTTPError as e:
         print(e)
     except URLError as e:
@@ -69,7 +71,7 @@ def _nbt(url):
 
 def _ng(url):
     try:
-        html = urllib.request.urlopen(url)
+        html = urlopen(url)
     except HTTPError as e:
         print(e)
     except URLError as e:

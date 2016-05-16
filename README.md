@@ -5,8 +5,10 @@ URLと名前を入れるだけで、ジャーナルクラブの目次を作っ�
 
 ## dependency
 
-* python3
+* python 2,3
 * BeautifulSoup
+* lxml
+* six
 
 ## 対応雑誌
 

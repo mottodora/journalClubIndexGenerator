@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
 
@@ -10,6 +12,7 @@ setup(name="indexGen",
       install_requires=[
           'beautifulsoup4',
           'lxml',
+          'six',
       ],
       entry_points="""
       [console_scripts]

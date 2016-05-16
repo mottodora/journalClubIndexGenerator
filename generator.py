@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
 import datetime
 import argparse
 
@@ -29,7 +31,8 @@ def main():
         for category, articles in journal_data:
             f.write('\section{%s}\n'%(category))
             for t, s in articles:
-                f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'%(t,s))
+                f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'\
+                        %(t.encode("utf-8"),s.encode("utf-8")))
         f.write('\end{document}\n')
     print('generate summary about %s %s'%(journal_title, meta_data))
 
