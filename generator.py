@@ -21,7 +21,7 @@ def main():
     with open("journalclub.tex", "w") as f:
         f.write('\\documentclass[a4j]{jsarticle}\n')
         f.write('\\begin{document}\n')
-        f.write('\\title{\\vspace{-1.5cm}JournalClub}\n')
+        f.write('\\title{\\vspace{-1.5cm}Journal Club}\n')
         f.write('\\author{%s}\n'%(author))
         d = datetime.datetime.today()
         f.write("\date{%s年%s月%s日\\vspace{-0.3cm}}\n"%(d.year, d.month, d.day))

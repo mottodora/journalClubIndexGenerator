@@ -11,7 +11,7 @@ setup(name="indexGen",
       packages=find_packages(),
       install_requires=[
           'beautifulsoup4',
-          'lxml',
+          'html5lib',
           'six',
       ],
       entry_points="""

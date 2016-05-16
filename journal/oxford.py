@@ -12,7 +12,7 @@ def _bioinformatics(url):
         print(e)
     except URLError as e:
         print("The server could not be found!")
-    bsObj = BeautifulSoup(html.read(), "lxml")
+    bsObj = BeautifulSoup(html.read(), "html5lib")
     meta_data = ' '.join(bsObj.find("cite")\
                         .get_text().replace("\n", "").split())
     journal_data = []
@@ -26,7 +26,7 @@ def _bioinformatics(url):
                     + article.find("a", {"rel": "abstract"})['href']
             try:
                 abst_html = urllib.request.urlopen(abst_url)
-                abstObj = BeautifulSoup(abst_html.read(), "lxml")
+                abstObj = BeautifulSoup(abst_html.read(), "html5lib")
                 abst_contents = abstObj.find("div", {"id": "abstract-1"})
                 results = abst_contents.findAll("p")[1].get_text()
                 results = results.split(':')[1]
@@ -45,7 +45,7 @@ def _nar(url):
         print(e)
     except URLError as e:
         print("The server could not be found!")
-    bsObj = BeautifulSoup(html.read(), "lxml")
+    bsObj = BeautifulSoup(html.read(), "html5lib")
     meta_data = ' '.join(bsObj.find("cite")\
                         .get_text().replace("\n", "").split())
 
@@ -59,7 +59,7 @@ def _nar(url):
                     + article.find("a", {"rel": "abstract"})['href']
             try:
                 abst_html = urllib.request.urlopen(abst_url)
-                abstObj = BeautifulSoup(abst_html.read(), "lxml")
+                abstObj = BeautifulSoup(abst_html.read(), "html5lib")
                 abst_contents = abstObj.find("div", {"id": "abstract-1"})
                 results = abst_contents.find("p", {"id": "p-2"}).get_text()
                 s = ' '.join(results.replace("\n", " ").split())

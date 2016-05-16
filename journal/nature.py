@@ -11,7 +11,8 @@ def _nature(url):
         print(e)
     except URLError as e:
         print("The server could not be found!")
-    bsObj = BeautifulSoup(html.read(), "lxml")
+
+    bsObj = BeautifulSoup(html.read(), "html5lib")
 
     meta = bsObj.find("div", {"id": "issue-meta"})\
             .find("div", {"class": "subsection"})
@@ -46,7 +47,7 @@ def _nbt(url):
         print(e)
     except URLError as e:
         print("The server could not be found!")
-    bsObj = BeautifulSoup(html.read(), "lxml")
+    bsObj = BeautifulSoup(html.read(), "html5lib")
 
     meta_data = bsObj.find("h2", {"class": "issue"}).get_text()
 
@@ -76,7 +77,7 @@ def _ng(url):
         print(e)
     except URLError as e:
         print("The server could not be found!")
-    bsObj = BeautifulSoup(html.read(), "lxml")
+    bsObj = BeautifulSoup(html.read(), "html5lib")
     meta_data = bsObj.find("h2", {"class": "issue"}).get_text()
 
     jounal_data = []
