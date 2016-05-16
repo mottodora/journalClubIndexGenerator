@@ -23,7 +23,8 @@ except HTTPError as e:
 except URLError as e:
     print("The server could not be found!")
 bsObj = BeautifulSoup(html.read(), "lxml")
-metadata = bsObj.find("cite").get_text().replace("\n\n", " ").replace(" ", "").replace("\n", " ").strip()
+#metadata = bsObj.find("cite").get_text().replace("\n\n", " ").replace(" ", "").replace("\n", " ").strip()
+metadata = ' '.join(bsObj.find("cite").get_text().replace("\n", "").split())
 author = args.author
 
 with open("journalclub.tex", "w") as f:
