@@ -1,4 +1,6 @@
+from urllib.error import URLError, HTTPError
 from journal.nature import _nature, _nbt, _ng
+from journal.oxford import _bioinformatics
 
 
 def generate(url):
@@ -12,6 +14,12 @@ def generate(url):
         elif url.split('/')[3] == 'ng':
             jounal_title = 'Nature Genetics'
             meta_data, journal_data = _ng(url)
+    elif url.split('/')[2].split('.')[1] == "oxfordjournals":
+        if url.split('/')[2].split('.')[0] == "bioinformatics":
+            jounal_title = 'bioinformatics'
+            meta_data, journal_data = _bioinformatics(url)
+    else:
+        raise URLError
 
     return jounal_title, meta_data, journal_data
 
