@@ -25,7 +25,8 @@ def _bioinformatics(url):
             abst_url = '/'.join(url.split('/')[:3]) \
                     + article.find("a", {"rel": "abstract"})['href']
             try:
-                abst_html = urllib.request.urlopen(abst_url)
+                #abst_html = urllib.request.urlopen(abst_url)
+                abst_html = urlopen(abst_url)
                 abstObj = BeautifulSoup(abst_html.read(), "html5lib")
                 abst_contents = abstObj.find("div", {"id": "abstract-1"})
                 results = abst_contents.findAll("p")[1].get_text()
