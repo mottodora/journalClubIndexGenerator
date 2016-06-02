@@ -3,6 +3,7 @@
 from six.moves.urllib.error import URLError, HTTPError
 from journal.nature import _nature, _nbt, _ng
 from journal.oxford import _bioinformatics, _nar
+from journal.csh import _genomeresearch
 
 
 def generate(url):
@@ -23,6 +24,10 @@ def generate(url):
         elif url.split('/')[2].split('.')[0] == 'nar':
             jounal_title = "Nucleic Acids Research"
             meta_data, journal_data = _nar(url)
+    elif url.split('/')[2].split('.')[1] == "cshlp":
+        if url.split('/')[2].split('.')[0] == "genome":
+            jounal_title = 'Genome Research'
+            meta_data, journal_data = _genomeresearch(url)
     else:
         raise URLError
 
