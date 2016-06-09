@@ -14,6 +14,8 @@ URLと名前を入れるだけで、ジャーナルクラブの目次を作っ�
 
 * Nature / Nature Genetics / Nature Biotechnology
 * Bioinformatics / Nucleic Acids Research
+* Genome Biology
+* Development
 
 ## 使い方
 
