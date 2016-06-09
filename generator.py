@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 import datetime
+import sys
 import argparse
 
 from gs import generate
@@ -31,8 +32,12 @@ def main():
         for category, articles in journal_data:
             f.write('\section{%s}\n'%(category))
             for t, s in articles:
-                f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'\
-                        %(t.encode("utf-8"),s.encode("utf-8")))
+                if sys.version_info[0] == 2:
+                    f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'\
+                            %(t.encode("utf-8"),s.encode("utf-8")))
+                elif sys.version_info[0] == 3:
+                    f.write('\\noindent\\textbf{%s}\n\n%s\n\n\\vspace{3mm}\n'\
+                            %(t,s))
         f.write('\end{document}\n')
     print('generate summary about %s %s'%(journal_title, meta_data))
 
