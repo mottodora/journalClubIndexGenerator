@@ -5,6 +5,7 @@ from journal.nature import _nature, _nbt, _ng
 from journal.oxford import _bioinformatics, _nar
 from journal.csh import _genomeresearch
 from journal.biologists import _development
+from journal.biomedcentral import _genomebiology
 
 
 def generate(url):
@@ -33,7 +34,10 @@ def generate(url):
         if url.split('/')[2].split('.')[0] == "dev":
             jounal_title = 'Development'
             meta_data, journal_data = _development(url)
-
+    elif url.split('/')[2].split('.')[1] == "biomedcentral":
+        if url.split('/')[2].split('.')[0] == "genomebiology":
+            jounal_title = 'GenomeBiology'
+            meta_data, journal_data = _genomebiology(url)
     else:
         raise URLError
 
